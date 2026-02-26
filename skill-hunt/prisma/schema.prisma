@@ -1,0 +1,33 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../app/generated/prisma"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  role          String
+  name          String
+  location      String?
+  techStack     String[]
+  campaignsCreated Campaign[] @relation("RecruiterCampaigns")
+  campaignsJoined  Campaign[] @relation("DeveloperCampaigns")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Campaign {
+  id          String   @id @default(uuid())
+  title       String
+  recruiterId String
+  recruiter   User     @relation("RecruiterCampaigns", fields: [recruiterId], references: [id])
+  candidates  User[]   @relation("DeveloperCampaigns")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
