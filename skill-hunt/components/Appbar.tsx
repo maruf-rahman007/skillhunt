@@ -14,9 +14,9 @@ export const Appbar = () => {
     };
 
     return (
-        <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
+        <nav className="flex items-center justify-between p-4 bg-[#5758a8] text-white">
             <h1 className="text-xl font-bold">
-                <Link href="/">Skill-Hunt</Link>
+                <Link className="p-6" href="/">Skill-Hunt</Link>
             </h1>
             <div className="flex items-center space-x-4">
                 {session?.user ? (

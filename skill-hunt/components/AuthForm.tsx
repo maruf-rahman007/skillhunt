@@ -1,5 +1,6 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
+import { checkRole } from "@/app/hooks/redirect.helper";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -31,7 +32,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignUp }) => {
         if (res?.error) {
             console.log("Email sign-in error:", res.error);
         } else {
-            router.push("/user");
+            const updatedSession = await getSession();
+            const redirectPath = checkRole(updatedSession); /** ✅ UPDATED */
+            router.push(redirectPath);
         }
     };
 
@@ -58,7 +61,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignUp }) => {
                                 required
                             />
                         </div>
-                        
+
                     )}
                     {isSignUp && (
                         <div>
@@ -72,7 +75,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isSignUp }) => {
                                 required
                             />
                         </div>
-                        
+
                     )}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>

@@ -14,7 +14,6 @@ export default async function UserComponent() {
 
     return (
         <div>
-            <Appbar />
             <h1>User Component</h1>
             {session ? (
                 <>

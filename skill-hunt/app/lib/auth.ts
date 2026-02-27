@@ -33,12 +33,18 @@ export const NEXT_AUTH = {
         jwt: async ({ user, token }: any) => {
             if (user) {
                 token.uid = user.id;
+                token.role = user.role;
+                token.location = user.location;
+                token.techStack = user.techStack;
             }
             return token;
         },
         session: ({ session, token, user }: any) => {
             if (session.user) {
-                session.user.id = token.uid
+                session.user.id = token.uid;
+                session.user.role = token.role;
+                session.user.location = token.location;
+                session.user.techStack = token.techStack;
             }
             return session
         }
